@@ -1,6 +1,8 @@
 from setuptools import setup, Extension
 from Модуль.scats.build import get_pybind_include, BuildExt
 
+__version__ = '0.1.0'
+
 ext_modules = [
     Extension(
         'scats',
@@ -19,7 +21,7 @@ ext_modules = [
 
 setup(
     name='scats',
-    version='0.1.0',
+    version=__version__,
     author='Pavel Sobolev',
     author_email='paveloom@mail.ru',
     url='https://github.com/Paveloom/C3.1',

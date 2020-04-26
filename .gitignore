@@ -4,4 +4,7 @@ build
 tmp
 *.egg-info
 *.cpython*.so
-*__pychache__
+*__pycache__
+
+# Архивы для публикации
+dist

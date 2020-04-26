@@ -4,7 +4,14 @@
 #include "prec.h"  // Точность вещественных чисел
 #include "scats.h" // API модуля
 
-namespace py = pybind11;
+#include <string> // Строки
+
+namespace py = pybind11; // Пространство имен pybind11
+
+static char *version = "0.1.0";
+static char *version_help = "Метод для вывода версии модуля SCATS";
+
+static char *module_doc = "Модуль для выполнения спектрально-корреляционного анализа временных рядов\nВерсия: ";
 
 static char *scats_api = "Экземпляр API для спектрально-корелляционного анализа временных рядов.";
 static char *scats_api_init = "Стандартный конструктор.";
@@ -26,6 +33,20 @@ static char *input_struct_x = "Тип: std::vector<value_type>;\nОписани�
 // Модуль SCATS
 PYBIND11_MODULE(scats, m)
 {
+
+#ifdef VERSION_INFO
+    m.attr("__version__") = VERSION_INFO;
+#else
+    m.attr("__version__") = "dev";
+#endif
+
+    // Описание модуля
+    m.doc() = (std::string(module_doc) + VERSION_INFO).c_str();
+
+    // Вывод версии модуля
+    m.def(
+        "version", [] { return VERSION_INFO; }, version_help);
+
     // API модуля
     py::class_<SCATS_API>(m, "api", scats_api)
         .def(py::init(), scats_api_init)

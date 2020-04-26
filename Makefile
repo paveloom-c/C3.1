@@ -36,7 +36,7 @@
      ALL : develop
 
 
-     # Блок правил для сборки, демонстрации и удаления модуля
+     # Блок правил для сборки, публикации, демонстрации и удаления модуля
 
      ## Правило для сборки и установки пакета
      install :
@@ -45,6 +45,18 @@
      ## Правило для установки версии для разработчика
      develop :
 	          pip3 install -e .
+
+     ## Правило для подготовки архивов для публикации
+     dist :
+	       python3 setup.py sdist
+
+     ## Правило для загрузки архивов на PyPI
+     upload :
+	         python3 -m twine upload dist/*
+
+     ## Правило для загрузки архивов на TestPyPI
+     upload-test :
+	              python3 -m twine upload --repository testpypi dist/*
 
      ## Правило для запуска скрипта examples/example.py
      example :

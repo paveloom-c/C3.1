@@ -28,7 +28,7 @@
      .SILENT :
 
      ## Правила-псевдоцели
-     .PHONY : git, git-am, new, del, final, git-new, git-clean, version, archive
+     .PHONY : git, git-am, new, del, final, archive
 
      ## Правило, выполняющееся при вызове координатора без аргументов
      ALL : git
@@ -39,9 +39,6 @@
 
      ## Имя пользователя на GitHub
      username := Paveloom
-
-     ## Сообщение стартового коммита
-     start_message := "Стартовый коммит."
 
      ## Имя ветки изменений
      feature_branch := feature
@@ -172,31 +169,5 @@
 
 	        fi
 
-     ## Правило для подключения удалённого репозитория и
-     ## загрузки в него стартового make-файла
-
-     ifeq (git-new, $(firstword $(MAKECMDGOALS)))
-          new_rep := $(wordlist 2, 2, $(MAKECMDGOALS))
-          $(eval $(new_rep):;@#)
-     endif
-
-     git-new :
-	          $(make) git-clean
-	          git init
-	          git remote add origin git@github.com:$(username)/$(new_rep).git
-	          git add Makefile
-	          git commit -m $(start_message)
-	          git push -u origin master
-
-     ## Правило для удаления репозитория в текущей директории
-     git-clean :
-	            rm -rf .git
-
-     # Правило для изменения версий Make-файлов
-     version :
-	          bash .github/scripts/VersionChange.sh
-	          $(make) archive
-
      # Правило для создания архивов
      archive :
-	          find Make-файлы/ -path '*/.*' -prune -o -type f -print | zip Архивы/Make-файлы.zip -FS -q -@

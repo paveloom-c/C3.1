@@ -52,7 +52,8 @@
 
      ## Правило для удаления локальной сборки
      clean :
-	        rm -rf build scats.egg-info tmp scats/__pycache__ scats/*.so
+	        rm -rf build Модуль/scats/scats.egg-info Модуль/scats/*.so \
+	        build tmp
 
      ## Правило для удаления модуля
      uninstall :

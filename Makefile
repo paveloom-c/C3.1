@@ -1,5 +1,7 @@
 
-     ## Это шаблон make-файла для публикации кода на GitHub.
+     ## Это шаблон* make-файла для публикации кода на GitHub.
+
+     ## * Изменен для данного репозитория.
 
      ## Репозиторий на GitHub: https://github.com/Paveloom/B1
      ## Документация: https://www.notion.so/paveloom/B1-fefcaf42ddf541d4b11cfcab63c2f018
@@ -31,8 +33,30 @@
      .PHONY : git, git-am, new, del, final, archive
 
      ## Правило, выполняющееся при вызове координатора без аргументов
-     ALL : git
+     ALL : develop
 
+
+     # Блок правил для сборки, демонстрации и удаления модуля
+
+     ## Правило для сборки и установки пакета
+     install :
+	          pip3 install .
+
+     ## Правило для установки версии для разработчика
+     develop :
+	          pip3 install -e .
+
+     ## Правило для запуска скрипта examples/example.py
+     example :
+	          cd Примеры && python3 main.py && cd ../
+
+     ## Правило для удаления локальной сборки
+     clean :
+	        rm -rf build scats.egg-info tmp scats/__pycache__ scats/*.so
+
+     ## Правило для удаления модуля
+     uninstall :
+	            pip3 uninstall scats
 
 
      # Блок правил для разработки и публикации кода на GitHub

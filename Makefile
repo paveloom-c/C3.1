@@ -48,7 +48,7 @@
 
      ## Правило для установки версии с PyPI
      install-pypi :
-	               pip3 install scats
+	               python3 -m pip install scats
 
      ## Правило для установки версии для разработчика
      develop :
@@ -57,6 +57,10 @@
      ## Правило для подготовки архивов для публикации
      dist :
 	       python3 setup.py sdist
+
+     ## Правило для удаления архивов для публикации
+     dist-clean :
+	             rm -rf dist
 
      ## Правило для загрузки архивов на PyPI
      upload :
@@ -216,3 +220,6 @@
 
      # Правило для создания архивов
      archive :
+	          find Библиотека/ -path '*/*' -type f -print | zip Архивы/Библиотека.zip -FS -q -@
+			find Модуль/ -path '*/*' -type f -print | zip Архивы/Модуль.zip -FS -q -@
+	          find Примеры/ -path '*/.*' -prune -o -type f -print | zip Архивы/Примеры.zip -FS -q -@

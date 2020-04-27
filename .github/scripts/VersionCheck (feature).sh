@@ -20,7 +20,7 @@ function check_module_version {
      echo "$1"
 
      # Избегание пробелов в аргументе
-     if grep __version__ "$1" | head -1 | | grep -oq "$CURRENT_TAG"; then
+     if grep __version__ "$1" | head -1 | grep -oq "$CURRENT_TAG"; then
 
           printf "\nВерсия в этом файле совпадает с текущей.\n"
 

@@ -18,7 +18,7 @@ function check_if_succeeded {
     local status=$?
 
     if [ $status -ne 0 ]; then
-        printf "\n[!] Ошибка при выполнении команды $1.\n\n"
+        printf "\n[!] Ошибка при выполнении команды $1.\n"
         ERROR_COUNT=$((ERROR_COUNT+1))
     fi
 
@@ -27,7 +27,7 @@ function check_if_succeeded {
 }
 
 # Проверка на удачную установку с PyPI
-printf "\nУстановка пакета с PyPI.\n\n"
+printf "\nУстановка пакета с PyPI.\n"
 check_if_succeeded "make install-pypi"
 
 # Проверка пропуска примера

@@ -1,7 +1,7 @@
 from setuptools import setup, Extension
 from Модуль.scats.build import get_pybind_include, BuildExt
 
-__version__ = '0.2.1-dev3'
+__version__ = '0.2.1'
 
 ext_modules = [
     Extension(

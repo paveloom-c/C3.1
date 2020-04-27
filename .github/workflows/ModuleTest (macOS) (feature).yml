@@ -14,4 +14,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Запуск скрипта для проверки модуля
-      run: bash .github/scripts/ModuleTest.sh
+      run: bash .github/scripts/ModuleTest\ \(feature\).sh

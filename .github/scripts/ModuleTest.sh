@@ -28,10 +28,10 @@ function check_if_succeeded {
 
 # Проверка на удачную установку с PyPI
 printf "\nУстановка пакета с PyPI.\n"
-check_if_succeeded "make install-pypi"
+check_if_succeeded "make install-testpypi"
 
 # Проверка пропуска примера
-printf "\Пропуск примера.\n\n"
+printf "\nПропуск примера.\n"
 check_if_succeeded "make example"
 
 # Проверка числа ошибок
@@ -42,6 +42,6 @@ if [ "$ERROR_COUNT" -gt 0 ]; then
 
 else
 
-     printf "\nВсё в порядке.\n"
+     printf "Всё в порядке.\n"
 
 fi

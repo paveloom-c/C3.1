@@ -46,6 +46,7 @@
      install-testpypi :
 	                   python3 -m pip install setuptools
 	                   python3 -m pip install pybind11
+	                   python3 -m pip install wheel
 	                   python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps scats
 
      ## Правило для установки версии с PyPI

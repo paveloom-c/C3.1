@@ -27,7 +27,7 @@ function check_if_succeeded {
 }
 
 # Проверка на удачную установку с PyPI
-printf "\nУстановка пакета с PyPI.\n"
+printf "\nУстановка пакета с TestPyPI.\n"
 check_if_succeeded "make install-testpypi"
 
 # Проверка пропуска примера

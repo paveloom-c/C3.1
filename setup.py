@@ -1,7 +1,7 @@
 from setuptools import setup, Extension
 from Модуль.scats.build import get_pybind_include, BuildExt
 
-__version__ = '0.2.0-dev1'
+__version__ = '0.2.0-dev2'
 
 ext_modules = [
     Extension(
@@ -33,7 +33,7 @@ setup(
     include_package_data=True,
     package_dir={'':'Модуль/scats'},
     ext_modules=ext_modules,
-    install_requires=['setuptools', 'pybind11>=2.4'],
+    install_requires=['setuptools', 'pybind11>=2.4', 'wheel'],
     setup_requires=['pybind11>=2.4'],
     cmdclass={'build_ext': BuildExt},
     classifiers=[

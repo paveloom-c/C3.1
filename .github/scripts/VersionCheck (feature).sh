@@ -20,7 +20,8 @@ function check_module_version {
      echo "$1"
 
      # Избегание пробелов в аргументе
-     if grep __version__ "$1" | head -1 | grep -oq "$CURRENT_TAG"; then
+     CURRENT_TAG_WITHOUT_V=$(echo "$CURRENT_TAG" | sed s/v//)
+     if [ "$(grep __version__ "$1" | head -1)" == "__version__ = '$CURRENT_TAG_WITHOUT_V'" ]; then
 
           printf "\nВерсия в этом файле совпадает с текущей.\n"
 
@@ -67,6 +68,9 @@ if [ $CURRENT_TAG == $MASTER_TAG ]; then
 
 fi
 
+# Запуск указанных проверок
+run_version_checks
+
 # Избегание точек в текущем теге
 CURRENT_TAG="$(echo $CURRENT_TAG | sed 's/v//' | sed 's/\./\\./g')"
 
@@ -78,9 +82,6 @@ if ! grep -q "releases/tag/v$CURRENT_TAG" README.md; then
      exit 1
 
 fi
-
-# Запуск указанных проверок
-run_version_checks
 
 # Проверка числа ошибок
 if [ "$ERROR_COUNT" -gt 0 ]; then

@@ -44,12 +44,14 @@
 
      ## Правило для установки версии с TestPyPI
      install-testpypi :
-	                   sudo apt-get install python3-setuptools
+	                   python3 -m pip install setuptools
+	                   python3 -m pip install pybind11
+	                   python3 -m pip install wheel
 	                   python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps scats
 
      ## Правило для установки версии с PyPI
      install-pypi :
-	               sudo apt-get install python3-setuptools
+	               python3 -m pip install setuptools
 	               python3 -m pip install scats
 
      ## Правило для установки версии для разработчика

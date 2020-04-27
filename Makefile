@@ -42,6 +42,14 @@
      install :
 	          pip3 install .
 
+     ## Правило для установки версии с TestPyPI
+     install-testpypi :
+	                   python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps scats
+
+     ## Правило для установки версии с PyPI
+     install-pypi :
+	               pip3 install scats
+
      ## Правило для установки версии для разработчика
      develop :
 	          pip3 install -e .

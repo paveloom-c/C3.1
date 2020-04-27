@@ -28,6 +28,7 @@ setup(
     license="Unlicense",
     description='Спектрально-корреляционный анализ временных рядов',
     long_description=open("README.md").read(),
+    long_description_content_type='text/markdown',
     package_data={"": ["README.md", "LICENSE.md"]},
     include_package_data=True,
     package_dir={'':'Модуль/scats'},
@@ -45,5 +46,5 @@ setup(
         "Programming Language :: C++",
         "Topic :: Scientific/Engineering :: Astronomy",
     ],
-    zip_safe=True,
+    zip_safe=True
 )

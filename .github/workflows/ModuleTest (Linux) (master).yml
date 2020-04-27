@@ -1,0 +1,17 @@
+name: ModuleTest (Linux)
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+
+jobs:
+  ModuleTest_Linux_master:
+
+    name: ModuleTest Job (Linux) (master)
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Запуск скрипта для проверки модуля
+      run: bash .github/scripts/ModuleTest\ \(master\).sh

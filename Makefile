@@ -1,5 +1,7 @@
 
-     ## Это шаблон make-файла для публикации кода на GitHub.
+     ## Это шаблон* make-файла для публикации кода на GitHub.
+
+     ## * Изменен для данного репозитория.
 
      ## Репозиторий на GitHub: https://github.com/Paveloom/B1
      ## Документация: https://www.notion.so/paveloom/B1-fefcaf42ddf541d4b11cfcab63c2f018
@@ -28,20 +30,67 @@
      .SILENT :
 
      ## Правила-псевдоцели
-     .PHONY : git, git-am, new, del, final, git-new, git-clean, version, archive
+     .PHONY : git, git-am, new, del, final, archive
 
      ## Правило, выполняющееся при вызове координатора без аргументов
-     ALL : git
+     ALL : develop
 
+
+     # Блок правил для сборки, публикации, демонстрации и удаления модуля
+
+     ## Правило для сборки и установки пакета
+     install :
+	          pip3 install .
+
+     ## Правило для установки версии с TestPyPI
+     install-testpypi :
+	                   python3 -m pip install setuptools
+	                   python3 -m pip install pybind11
+	                   python3 -m pip install wheel
+	                   python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps scats
+
+     ## Правило для установки версии с PyPI
+     install-pypi :
+	               python3 -m pip install scats
+
+     ## Правило для установки версии для разработчика
+     develop :
+	          pip3 install -e .
+
+     ## Правило для подготовки архивов для публикации
+     dist :
+	       python3 setup.py sdist
+
+     ## Правило для удаления архивов для публикации
+     dist-clean :
+	             rm -rf dist
+
+     ## Правило для загрузки архивов на PyPI
+     upload :
+	         python3 -m twine upload dist/*
+
+     ## Правило для загрузки архивов на TestPyPI
+     upload-test :
+	              python3 -m twine upload --repository testpypi dist/*
+
+     ## Правило для запуска скрипта examples/example.py
+     example :
+	          cd Примеры && python3 main.py && cd ../
+
+     ## Правило для удаления локальной сборки
+     clean :
+	        rm -rf build Модуль/scats/scats.egg-info Модуль/scats/*.so \
+	        Модуль/scats/__pycache__ build tmp
+
+     ## Правило для удаления модуля
+     uninstall :
+	            pip3 uninstall scats
 
 
      # Блок правил для разработки и публикации кода на GitHub
 
      ## Имя пользователя на GitHub
      username := Paveloom
-
-     ## Сообщение стартового коммита
-     start_message := "Стартовый коммит."
 
      ## Имя ветки изменений
      feature_branch := feature
@@ -172,31 +221,8 @@
 
 	        fi
 
-     ## Правило для подключения удалённого репозитория и
-     ## загрузки в него стартового make-файла
-
-     ifeq (git-new, $(firstword $(MAKECMDGOALS)))
-          new_rep := $(wordlist 2, 2, $(MAKECMDGOALS))
-          $(eval $(new_rep):;@#)
-     endif
-
-     git-new :
-	          $(make) git-clean
-	          git init
-	          git remote add origin git@github.com:$(username)/$(new_rep).git
-	          git add Makefile
-	          git commit -m $(start_message)
-	          git push -u origin master
-
-     ## Правило для удаления репозитория в текущей директории
-     git-clean :
-	            rm -rf .git
-
-     # Правило для изменения версий Make-файлов
-     version :
-	          bash .github/scripts/VersionChange.sh
-	          $(make) archive
-
      # Правило для создания архивов
      archive :
-	          find Make-файлы/ -path '*/.*' -prune -o -type f -print | zip Архивы/Make-файлы.zip -FS -q -@
+	          find Библиотека/ -path '*/*' -type f -print | zip Архивы/Библиотека.zip -FS -q -@
+			find Модуль/ -path '*/*' -type f -print | zip Архивы/Модуль.zip -FS -q -@
+	          find Примеры/ -path '*/.*' -prune -o -type f -print | zip Архивы/Примеры.zip -FS -q -@

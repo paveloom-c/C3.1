@@ -1,0 +1,6 @@
+name: scats
+
+dependencies:
+  - python=3.7
+  - numpy
+  - pybind11

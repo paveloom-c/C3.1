@@ -1,15 +1,17 @@
-from setuptools import setup, Extension
-from Модуль.scats.build import get_pybind_include, BuildExt
+# -*- coding: utf-8 -*-
 
-__version__ = '0.2.2'
+from setuptools import setup, Extension
+from src.scats.build import get_pybind_include, BuildExt
+
+__version__ = '0.2.3'
 
 ext_modules = [
     Extension(
         'scats',
-        ['Модуль/scats/scats.cpp'],
+        ['src/scats/scats.cpp'],
         include_dirs=[
             # Путь к библиотеке scats
-            'Библиотека/scats',
+            'lib/scats',
 
             # Путь к заголовочным файлам pybind11
             get_pybind_include(),
@@ -31,7 +33,7 @@ setup(
     long_description_content_type='text/markdown',
     package_data={"": ["README.md", "LICENSE.md"]},
     include_package_data=True,
-    package_dir={'':'Модуль/scats'},
+    package_dir={'':'src/scats'},
     ext_modules=ext_modules,
     install_requires=['pybind11>=2.4'],
     setup_requires=['pybind11>=2.4'],

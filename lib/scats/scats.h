@@ -15,9 +15,6 @@ struct SCATS_API
      // Процедура для общего освобождения памяти
      inline void deallocate();
 
-     // Процедура для считывания входных данных
-     void read_input(const char *);
-
 private:
      // Оператор копирования (запрещен)
      SCATS_API(const SCATS_API &);
@@ -29,6 +26,5 @@ private:
 // Определение процедуры для
 // общего освобождения памяти
 #include "api/scats_deallocate.h"
-#include "api/scats_read_input.h"
 
 #endif // _SCATS_

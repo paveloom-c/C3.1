@@ -44,16 +44,14 @@
 
      ## Правило для установки версии с TestPyPI
      install-testpypi :
-	                   python3 -m pip install setuptools
-	                   python3 -m pip install wheel
-	                   python3 -m pip install pybind11
-	                   python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps scats
+	                   python3 -m pip install -r requirements
+				    python3 -m pip install pybind11
+	                   python3 -m pip install --no-cache-dir --index-url https://test.pypi.org/simple/ --no-deps scats
 
      ## Правило для установки версии с PyPI
      install-pypi :
-	               python3 -m pip install setuptools
-	               python3 -m pip install wheel
-	               python3 -m pip install scats
+	               python3 -m pip install -r requirements
+	               python3 -m pip install --no-cache-dir scats
 
      ## Правило для установки версии для разработчика
      develop :
@@ -77,12 +75,12 @@
 
      ## Правило для запуска скрипта examples/example.py
      example :
-	          cd Примеры && python3 main.py && cd ../
+	          cd examples && python3 main.py && cd ../
 
      ## Правило для удаления локальной сборки
      clean :
-	        rm -rf build Модуль/scats/scats.egg-info Модуль/scats/*.so \
-	        Модуль/scats/__pycache__ build tmp
+	        rm -rf build src/scats/scats.egg-info src/scats/*.so \
+	        src/scats/__pycache__ build tmp
 
      ## Правило для удаления модуля
      uninstall :
@@ -225,6 +223,6 @@
 
      # Правило для создания архивов
      archive :
-	          find Библиотека/ -path '*/*' -type f -print | zip Архивы/Библиотека.zip -FS -q -@
-			find Модуль/ -path '*/*' -type f -print | zip Архивы/Модуль.zip -FS -q -@
-	          find Примеры/ -path '*/.*' -prune -o -type f -print | zip Архивы/Примеры.zip -FS -q -@
+	          find lib/ -path '*/*' -type f -print | zip archives/lib.zip -FS -q -@
+			find src/ -path '*/*' -type f -print | zip archives/src.zip -FS -q -@
+	          find examples/ -path '*/.*' -prune -o -type f -print | zip archives/examples.zip -FS -q -@

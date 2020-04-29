@@ -1,10 +1,21 @@
-.. scats documentation master file, created by
-   sphinx-quickstart on Tue Apr 28 13:22:51 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+scats
+=====
 
-Welcome to scats's documentation!
-=================================
+.. raw:: html
+
+    <div style="color: #555; border-left: 8px solid #ddd; padding: 5px 15px 8px; margin: 20px 0">
+    Спектрально-корреляционный анализ временных рядов.
+    </div>
+
+Возможности API модуля:
+
+* генерация равномерного временного ряда с произвольным набором гармонических компонент;
+* исключение линейного тренда из данных временного ряда;
+* вычисление периодограммы с использованием быстрого преобразования Фурье;
+* вычисление коррелограммы с использованием быстрого преобразования Фурье;
+* вычисление взвешенной коррелограммы с использованием весовой функции Тьюки;
+* вычисление сглаженной периодограммы с использованием быстрого преобразования Фурье;
+* графическое представление получаемых результатов.
 
 .. toctree::
    :maxdepth: 1
@@ -13,9 +24,9 @@ Welcome to scats's documentation!
    api/external
    api/internal
 
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Индексы
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   indexes/scats

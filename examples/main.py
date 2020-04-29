@@ -7,5 +7,3 @@ s = sc.api()
 
 # Считывание входных данных из файла
 s.read_input("files/input")
-
-print(s.input.N)

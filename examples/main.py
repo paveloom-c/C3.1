@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import scats as sc # Подключение модуля
+try:
+     import scats as sc # Подключение модуля
 
-# Создание экземпляра интерфейса
-s = sc.api()
+     # Создание экземпляра интерфейса
+     s = sc.api()
 
-# Считывание входных данных из файла
-s.read_input("files/input")
+     # Считывание входных данных из файла
+     s.read_input("files/input")
+
+except:
+     pass

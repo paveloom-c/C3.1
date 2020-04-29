@@ -25,17 +25,26 @@ PYBIND11_MODULE(scats, m)
     m.def(
         "version", [] { return VERSION_INFO; }, "Метод для вывода версии модуля SCATS");
 
+    // Регистрация исключений
+    py::register_exception<scats_input_read_exception>(m, "input_read_exception");
+    py::register_exception<scats_input_read_element_exception>(m, "input_read_element_exception");
+
     // API модуля
     py::class_<SCATS_API>(m, "api", "Экземпляр API для спектрально-корелляционного анализа временных рядов")
         .def(py::init())
         .def_readonly("input", &SCATS_API::input, R"delim(
         Экземпляр класса :class:`scats.input` для взаимодействия с входными данными
         )delim")
-        .def("read_input", &SCATS_API::read_input, py::arg("file"), R"delim(
-        Процедура для считывания входных данных из файла
+        .def(
+            "read_input", [](SCATS_API &api, const char *file) { api.input.read(file); }, R"delim(
+        Процедура для считывания входных данных из файла (alias :func:`scats.input.read`)
 
         Args:
             file (str): Имя файла для считывания.
+
+        Raises:
+            input_read_exception: Не удалось открыть / закрыть файл или не удалось считать :attr:`scats.input.N`, :attr:`delta_t` или :attr:`q`.
+            input_read_element_exception: Не удалось считать один из элементов массивов :attr:`scats.input.t` и :attr:`scats.input.x`.
         )delim")
         .def("deallocate", &SCATS_API::deallocate, "Вспомогательная процедура для общего освобождения памяти");
 
@@ -45,6 +54,17 @@ PYBIND11_MODULE(scats, m)
         .def_readwrite("N", &input_struct<RT>::N, "int: Размер выборки.")
         .def_readwrite("delta_t", &input_struct<RT>::delta_t, "float: Шаг выборки.")
         .def_readwrite("q", &input_struct<RT>::q, "float: Уровень значимости.")
-        .def_readwrite("t", &input_struct<RT>::t, "numpy.ndarray[N]: Массив времени.")
-        .def_readwrite("x", &input_struct<RT>::x, "numpy.ndarray[N]: Массив значений.");
+        .def_readwrite("t", &input_struct<RT>::t, "array[N]: Массив времени.")
+        .def_readwrite("x", &input_struct<RT>::x, "array[N]: Массив значений.")
+        .def("read", &input_struct<RT>::read, py::arg("file"), R"delim(
+        Процедура для считывания входных данных из файла
+
+        Args:
+            file (str): Имя файла для считывания.
+
+        Raises:
+            input_read_exception: Не удалось открыть / закрыть файл или не удалось считать :attr:`scats.input.N`, :attr:`delta_t` или :attr:`q`.
+            input_read_element_exception: Не удалось считать один из элементов массивов :attr:`scats.input.t` и :attr:`scats.input.x`.
+        )delim")
+        .def("deallocate", &input_struct<RT>::deallocate, "Процедура для освобождения памяти из-под входных данных");
 }

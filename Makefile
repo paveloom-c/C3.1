@@ -44,13 +44,13 @@
 
      ## Правило для установки версии с TestPyPI
      install-testpypi :
-	                   python3 -m pip install -r requirements
+	                   python3 -m pip install -r .requirements
 				    python3 -m pip install pybind11
 	                   python3 -m pip install --no-cache-dir --index-url https://test.pypi.org/simple/ --no-deps scats
 
      ## Правило для установки версии с PyPI
      install-pypi :
-	               python3 -m pip install -r requirements
+	               python3 -m pip install -r .requirements
 	               python3 -m pip install --no-cache-dir scats
 
      ## Правило для установки версии для разработчика

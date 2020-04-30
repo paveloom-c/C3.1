@@ -1,12 +1,49 @@
+#include <string>              // Строки
+#include <sstream>             // Строки в потоке
 #include <pybind11/pybind11.h> // Функции связывания
 #include <pybind11/stl.h>      // STL контейнеры
+#include <pybind11/numpy.h>    // Numpy
 
 #include "prec.h"  // Точность вещественных чисел
 #include "scats.h" // API модуля
 
-#include <string> // Строки
-
 namespace py = pybind11; // Пространство имен pybind11
+
+// Вспомогательные функции
+namespace custom
+{
+std::string to_string(const RT &value)
+{
+    std::ostringstream out;
+    out.precision(15);
+    out << value;
+    return out.str();
+}
+
+// Функция для вывода значений массивов в __repr__
+std::string to_string(const std::vector<RT> &vec)
+{
+    std::string r;
+    if (vec.size() != 0)
+    {
+        std::ostringstream out;
+        out.precision(15);
+        out << vec[0];
+        r += "[" + std::accumulate(vec.begin() + 1, vec.end(), out.str(), [](const std::string &a, RT b) {
+                 std::ostringstream out;
+                 out.precision(15);
+                 out << b;
+                 return a + ", " + out.str();
+             }) +
+             "]";
+    }
+    else
+    {
+        r += "[]";
+    }
+    return r;
+}
+} // namespace custom
 
 // Модуль SCATS
 PYBIND11_MODULE(scats, m)
@@ -31,7 +68,7 @@ PYBIND11_MODULE(scats, m)
 
     // API модуля
     py::class_<SCATS_API>(m, "api", "Экземпляр API для спектрально-корелляционного анализа временных рядов")
-        .def(py::init())
+        .def(py::init<>())
         .def_readonly("input", &SCATS_API::input, R"delim(
         Экземпляр класса :class:`scats.input` для взаимодействия с входными данными
         )delim")
@@ -50,7 +87,7 @@ PYBIND11_MODULE(scats, m)
 
     // Входные данные
     py::class_<input_struct<RT>>(m, "input", "Интерфейс для взаимодействия с входными данными.")
-        .def(py::init())
+        .def(py::init<>())
         .def_readwrite("N", &input_struct<RT>::N, "int: Размер выборки.")
         .def_readwrite("delta_t", &input_struct<RT>::delta_t, "float: Шаг выборки.")
         .def_readwrite("q", &input_struct<RT>::q, "float: Уровень значимости.")
@@ -66,5 +103,19 @@ PYBIND11_MODULE(scats, m)
             input_read_exception: Не удалось открыть / закрыть файл или не удалось считать :attr:`scats.input.N`, :attr:`delta_t` или :attr:`q`.
             input_read_element_exception: Не удалось считать один из элементов массивов :attr:`scats.input.t` и :attr:`scats.input.x`.
         )delim")
-        .def("deallocate", &input_struct<RT>::deallocate, "Процедура для освобождения памяти из-под входных данных");
+        .def("deallocate", &input_struct<RT>::deallocate, "Процедура для освобождения памяти из-под входных данных")
+        .def("__repr__", [](const input_struct<RT> &input) {
+            std::string r("Содержимое объекта:\n\n");
+            r += "Размер выборки:\n";
+            r += custom::to_string(input.N);
+            r += "\n\nШаг выборки:\n";
+            r += custom::to_string(input.delta_t);
+            r += "\n\nУровень значимости:\n";
+            r += custom::to_string(input.q);
+            r += "\n\nМассив времени:\n";
+            r += custom::to_string(input.t);
+            r += "\n\nМассив значений:\n";
+            r += custom::to_string(input.x);
+            return r;
+        });
 }

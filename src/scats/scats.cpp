@@ -83,7 +83,12 @@ PYBIND11_MODULE(scats, m)
             input_read_exception: Не удалось открыть / закрыть файл или не удалось считать :attr:`scats.input.N`, :attr:`delta_t` или :attr:`q`.
             input_read_element_exception: Не удалось считать один из элементов массивов :attr:`scats.input.t` и :attr:`scats.input.x`.
         )delim")
-        .def("deallocate", &SCATS_API::deallocate, "Вспомогательная процедура для общего освобождения памяти");
+        .def("deallocate", &SCATS_API::deallocate, "Вспомогательная процедура для общего освобождения памяти")
+        .def("__repr__", [](const SCATS_API &api) {
+            std::string r("Вы можете вызвать функцию print() на следующие объекты этого класса:\n");
+            r += "    input\n";
+            return r;
+        });
 
     // Входные данные
     py::class_<input_struct<RT>>(m, "input", "Интерфейс для взаимодействия с входными данными.")
@@ -105,7 +110,7 @@ PYBIND11_MODULE(scats, m)
         )delim")
         .def("deallocate", &input_struct<RT>::deallocate, "Процедура для освобождения памяти из-под входных данных")
         .def("__repr__", [](const input_struct<RT> &input) {
-            std::string r("Содержимое объекта:\n\n");
+            std::string r("Содержимое объекта класса input:\n\n");
             r += "Размер выборки:\n";
             r += custom::to_string(input.N);
             r += "\n\nШаг выборки:\n";

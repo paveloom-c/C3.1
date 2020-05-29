@@ -91,7 +91,7 @@ PYBIND11_MODULE(scats, m)
         });
 
     // Входные данные
-    py::class_<input_struct<RT>>(m, "input", "Интерфейс для взаимодействия с входными данными.")
+    py::class_<input_struct<RT>>(m, "", "Интерфейс для взаимодействия с входными данными.")
         .def(py::init<>())
         .def_readwrite("N", &input_struct<RT>::N, "int: Размер выборки.")
         .def_readwrite("delta_t", &input_struct<RT>::delta_t, "float: Шаг выборки.")

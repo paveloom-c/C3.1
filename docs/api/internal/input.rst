@@ -4,6 +4,3 @@
 
 Входные данные
 ==============
-
-.. autoclass:: scats.input
-    :members:
